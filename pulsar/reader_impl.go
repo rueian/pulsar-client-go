@@ -165,6 +165,9 @@ func (r *reader) hasMoreMessages() bool {
 	}
 
 	if r.pc.options.startMessageIDInclusive {
+		if r.pc.startMessageID.messageID.equal(lastestMessageID.(messageID)) {
+			return r.lastMessageInBroker.isEntryIDValid()
+		}
 		return r.lastMessageInBroker.isEntryIDValid() && r.lastMessageInBroker.greaterEqual(r.pc.startMessageID.messageID)
 	}
 
