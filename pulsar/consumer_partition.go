@@ -894,6 +894,10 @@ func (pc *partitionConsumer) reconnectToBroker() {
 		if maxRetry > 0 {
 			maxRetry--
 		}
+		if maxRetry == 0 {
+			pc.log.Info("MaxReconnectToBroker reached, stop reconnecting to broker")
+			pc.parentConsumer.Close()
+		}
 	}
 }
 
